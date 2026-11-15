@@ -1,6 +1,6 @@
 import React, { ChangeEvent, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
-import { isFileType, isFileTypeSupported } from './utils';
+import { getMatchingTypes } from './utils';
 import styles from './styles.less';
 
 export type FileType = string;
@@ -35,11 +35,12 @@ const FileDropProvider = ({ children }: Props) => {
         file
             .arrayBuffer()
             .then((buffer) => {
+                const matchingTypes = getMatchingTypes(file, buffer);
                 listeners.current
                     .filter(([type]) => type === '*')
-                    .forEach(([, listener]) => listener(file, buffer, isFileTypeSupported(buffer)));
+                    .forEach(([, listener]) => listener(file, buffer, matchingTypes.length > 0));
                 listeners.current
-                    .filter(([type]) => type !== '*' && (type === file.type || isFileType(buffer, type)))
+                    .filter(([type]) => matchingTypes.includes(type))
                     .forEach(([, listener]) => listener(file, buffer, true));
             })
             .catch(console.error);
