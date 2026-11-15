@@ -39,7 +39,7 @@ const FileDropProvider = ({ children }: Props) => {
                     .filter(([type]) => type === '*')
                     .forEach(([, listener]) => listener(file, buffer, isFileTypeSupported(buffer)));
                 listeners.current
-                    .filter(([type]) => type !== '*' && (file.type ? type === file.type : isFileType(buffer, type)))
+                    .filter(([type]) => type !== '*' && (type === file.type || isFileType(buffer, type)))
                     .forEach(([, listener]) => listener(file, buffer, true));
             })
             .catch(console.error);

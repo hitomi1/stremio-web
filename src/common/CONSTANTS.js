@@ -47,12 +47,15 @@ const ICON_FOR_TYPE = new Map([
 const MIME_SIGNATURES = {
     'application/x-subrip': ['310D0A', '310A'],
     'text/vtt': ['574542565454'],
+    // "[Script Info]", with and without a UTF-8 BOM
+    'text/x-ssa': ['5B53637269707420496E666F5D', 'EFBBBF5B53637269707420496E666F5D'],
     'application/x-bittorrent': ['64'],
 };
 
 const SUPPORTED_LOCAL_SUBTITLES = [
     'application/x-subrip',
     'text/vtt',
+    'text/x-ssa',
 ];
 
 const EXTERNAL_PLAYERS = [
